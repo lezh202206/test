@@ -26,8 +26,8 @@ func main() {
 	}
 
 	headerList := []*excel.Header{
-		{Name: "年龄", Field: "MerchantId", ColWidth: 8},
-		{Name: "性别", Field: "Openid", ColWidth: 8},
+		{Name: "商户ID", Field: "MerchantId", ColWidth: 8},
+		{Name: "OpenID", Field: "Openid", ColWidth: 14},
 	}
 	sheets := []*excel.Sheet{{
 		Name:    "test_1",

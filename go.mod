@@ -11,7 +11,6 @@ require (
 	github.com/spf13/viper v1.18.2
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
 	github.com/xuri/excelize/v2 v2.8.1
-	golang.org/x/mobile v0.0.0-20190719004257-d2bd2a29d028
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.8
 )
