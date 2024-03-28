@@ -1,0 +1,7 @@
+# auth token生成
+# HS256加密secret
+secret: 'zby@2021#0510'
+# access-token过期时间,单位是分钟
+expire: 43200
+# refresh-access-token过期时间,单位是分钟
+refresh_expire: 43200

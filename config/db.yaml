@@ -1,0 +1,17 @@
+# 数据库配置
+# 读写库连接
+write:
+  # 驱动名称（写死mysql）
+  driver: mysql
+  # 数据库连接字符串
+  source: root:zby123456@tcp(gz-cdb-9tvaefsf.sql.tencentcdb.com:63436)/zhubaoe?charset=utf8mb4&parseTime=false&loc=Local
+  #  source: tangwz:Zby@tdsql2023@tcp(gz-tdsqlshard-d99d51l5.sql.tencentcdb.com:29942)/zhubaoe?charset=utf8mb4&parseTime=false&loc=Local
+  # 是否调试模式，发布生产注意修改为 false
+  debug: true
+# 只读库连接
+read:
+  driver: mysql
+  source: root:zby123456@tcp(gz-cdb-9tvaefsf.sql.tencentcdb.com:63436)/zhubaoe?charset=utf8mb4&parseTime=false&loc=Local
+  # source: tangwz:Zby@tdsql2023@tcp(gz-tdsqlshard-d99d51l5.sql.tencentcdb.com:29942)/zhubaoe?charset=utf8mb4&parseTime=false&loc=Local
+  # 是否调试模式，发布生产注意修改为 false
+  debug: true

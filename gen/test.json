@@ -1,0 +1,34 @@
+[
+  {
+    "group": "merchant",
+    "name": "level",
+    "note": "商户等级",
+    "items": [
+      {
+        "key": "gratis",
+        "value": 1,
+        "note": "免费版"
+      },
+      {
+        "key": "ultimate",
+        "value": 2,
+        "note": "旗舰版"
+      },
+      {
+        "key": "classic",
+        "value": 3,
+        "note": "经典版"
+      },
+      {
+        "key": "super_gold",
+        "value": 4,
+        "note": "超店版"
+      },
+      {
+        "key": "wisdom_honor",
+        "value": 5,
+        "note": "智尊版"
+      }
+    ]
+  }
+]
