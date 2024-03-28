@@ -12,3 +12,7 @@ func TestDbConf(t *testing.T) {
 func TestJwtConf(t *testing.T) {
 	fmt.Printf("%+v", JWTViper())
 }
+
+func TestRedisConf(t *testing.T) {
+	fmt.Printf("%+v", RedisViper())
+}
