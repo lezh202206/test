@@ -18,7 +18,7 @@ var (
 func NewTrace(serviceName string) {
 	once.Do(func() {
 		// 设置上报网关(后续可以改为多模式单选：入文件记录、agent代理记录)
-		sender := transport.NewHTTPTransport(t_viper.TraceViper().EsServer)
+		sender := transport.NewHTTPTransport(t_viper.TraceViper().Addr)
 		//sender := transport.NewHTTPTransport("t_viper.TraceViper().EsServer")
 		// 初始化 链路系统：1.服务名、2.上报规则、3.记录器
 		tracer, _ := jaeger.NewTracer(

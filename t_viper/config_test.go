@@ -18,5 +18,5 @@ func TestRedisConf(t *testing.T) {
 }
 
 func TestTraceConf(t *testing.T) {
-	fmt.Printf("%+v", TraceViper().EsServer)
+	fmt.Printf("%+v", TraceViper().Addr)
 }

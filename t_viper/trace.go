@@ -4,16 +4,17 @@ import "sync"
 
 type tracingConf struct {
 	// 链路追踪es的地址
-	EsServer string `yaml:"es_server"`
+	Addr string `yaml:"addr"`
 }
 
-var tracingOnce sync.Once
-var tracingC tracingConf
+var (
+	tracingOnce sync.Once
+	tracingC    tracingConf
+)
 
 // tracing
 func TraceViper() tracingConf {
 	tracingOnce.Do(func() {
-		tracingC = tracingConf{}
 		Viperr("tracing.yaml", &tracingC)
 	})
 	return tracingC
