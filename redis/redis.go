@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-redis/redis/v8"
 	"sync"
 	"test/t_viper"
@@ -61,4 +62,43 @@ func (redis Redis) HmSet(key string, data ...interface{}) {
 func (redis Redis) HmGet(key string, fields string) (data []interface{}, err error) {
 	data, err = redis.Cli.HMGet(redis.Ctx, key, fields).Result()
 	return data, nil
+}
+
+func (redis Redis) Consumer() {
+	pubSub := redis.Cli.Subscribe(redis.Ctx, "channel1")
+	fmt.Println(pubSub)
+	done := make(chan string)
+	go func() {
+		defer close(done)
+		for {
+			select {
+			case <-redis.Ctx.Done():
+				return
+			case msg := <-pubSub.Channel():
+				fmt.Println(msg)
+			}
+		}
+	}()
+	<-done
+}
+
+func (redis Redis) Producer() {
+	msgChannel := make(chan string)
+
+	go func() {
+		for {
+			msg := <-msgChannel
+			fmt.Println(msg)
+			err := redis.Cli.Publish(redis.Ctx, "channel1", msg).Err()
+			if err != nil {
+				continue
+			}
+		}
+	}()
+
+	for {
+		message := fmt.Sprint("Message sent at ", time.Now().Format(time.DateTime))
+		msgChannel <- message
+		time.Sleep(time.Second * 5)
+	}
 }
