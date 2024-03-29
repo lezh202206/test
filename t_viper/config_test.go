@@ -16,3 +16,7 @@ func TestJwtConf(t *testing.T) {
 func TestRedisConf(t *testing.T) {
 	fmt.Printf("%+v", RedisViper())
 }
+
+func TestTraceConf(t *testing.T) {
+	fmt.Printf("%+v", TraceViper().EsServer)
+}
