@@ -1,0 +1,35 @@
+# http配置
+# http模式，本地，测试环境使用debug，注意发布生产必须修改为 release
+mode: debug
+# 服务
+service:
+  merchant: ':20001'
+  report: ':20002'
+  order: ':20003'
+  goods: ':20004'
+  thirdparty: ':20006'
+  message: ':20007'
+  customer: ':20008'
+  media: ':20009'
+  foundation: ':20010'
+  stock: ':20011'
+  reportcenter: ':20013'
+  merchantpush: ':20014'
+  lmcrm: ':20015'
+  showcase: ':20016'
+  ai: ':20017'
+  wsd: ':20018'
+t_secret_key:
+  # 仅用于测试的秘钥対, 其他环境会删除
+  only_test_app_id: 'fmyria0a26msy5nYtxHzSVhR2CE8WvDo'
+  # 该组用于超店
+  "EtcMzPqluFpmKG3v": "3s7SlnHDDigLirQaztV1oJ3mQtm86gU9"
+  # 老庙
+  "3h9xILjTnXXr3dVk": "RdDVFFcNl9Y32PqcKqK53zZdliIuXjzq"
+  #万思达
+  "ODT3gHAbz4L3eEgr": "ItkllSNy85rDvbS0ypoXba5BvzZoo7QQ"
+  "f6SMX7XliqBsR4Vv": "Xi9lulx51XRRLf6qasDSpndu6bXPbT9y"
+  "5NsqjN4aSDPC7eeP": "iRQHETIVlawSY5qKxh0aUHdRta4F6jko"
+  "ZnvOXTo0OyXX3uPF": "0pQWzLOiVG31UVeThlIx0xNNgUhMNvxO"
+  "Z3DrMQIwq4nJIqPr": "3AXDwQT52ICm4ecwsVAtJ9vqoKmvBg9C"
+  "WdUfLAVndh3FszIe": "TC96laQBt9TXixe8FgarlmweThXlcaYn"
