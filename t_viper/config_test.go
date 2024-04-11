@@ -24,3 +24,7 @@ func TestTraceConf(t *testing.T) {
 func TestHttpConf(t *testing.T) {
 	fmt.Printf("%+v", HttpViper())
 }
+
+func TestGiteeConf(t *testing.T) {
+	fmt.Printf("%+v", GiteeViper())
+}

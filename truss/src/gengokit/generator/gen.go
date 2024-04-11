@@ -34,7 +34,7 @@ func GenerateGokit(sd *svcdef.Svcdef, conf gengokit.Config) (map[string]io.Reade
 	svcname := strings.ToLower(sd.Service.Name)
 	for _, templPath := range templFiles.AssetNames() {
 		// Re-derive the actual path for this file based on the service output
-		// path provided by the truss main.go
+		// path provided by the truss myGit.go
 		actualPath := templatePathToActual(templPath, svcname)
 		file, err := generateResponseFile(templPath, data, conf.PreviousFiles[actualPath])
 		if err != nil {
