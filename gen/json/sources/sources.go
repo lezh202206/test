@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"strings"
-	"test/gen/define"
+	"test/gen/json/define"
 )
 
 // 获取数据源

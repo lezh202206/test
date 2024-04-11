@@ -20,3 +20,7 @@ func TestRedisConf(t *testing.T) {
 func TestTraceConf(t *testing.T) {
 	fmt.Printf("%+v", TraceViper().Addr)
 }
+
+func TestHttpConf(t *testing.T) {
+	fmt.Printf("%+v", HttpViper())
+}

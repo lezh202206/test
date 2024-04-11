@@ -1,6 +1,8 @@
 package main
 
-import "test/gen/enum_gen"
+import (
+	"test/gen/json/enum_gen"
+)
 
 func main() {
 	gen := enum_gen.EnumsGen()

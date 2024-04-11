@@ -1,13 +1,12 @@
 package enum_gen
 
 import (
-	"fmt"
 	"os"
 	"path"
 	"strings"
-	"test/gen/define"
-	"test/gen/sources"
-	"test/gen/tmpl"
+	"test/gen/json/define"
+	"test/gen/json/sources"
+	"test/gen/json/tmpl"
 	"test/templates"
 )
 
@@ -26,7 +25,6 @@ func EnumsGen() *enumsGen {
 
 func (eg enumsGen) Gen(fileName string) {
 	eg.source = sources.GetSources(path.Join(eg.root, fileName))
-	fmt.Println(1)
 
 	eg.genFolder(fileName)
 

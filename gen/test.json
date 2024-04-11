@@ -30,5 +30,39 @@
         "note": "智尊版"
       }
     ]
+  },
+  {
+    "group": "merchant",
+    "name": "status",
+    "note": "商户状态",
+    "items": [
+      {
+        "key": "use",
+        "value": 1,
+        "note": "已使用"
+      },
+      {
+        "key": "un",
+        "value": 2,
+        "note": "未使用"
+      }
+    ]
+  },
+  {
+    "group": "merchant_shop",
+    "name": "status",
+    "note": "门店状态",
+    "items": [
+      {
+        "key": "use",
+        "value": 1,
+        "note": "已使用"
+      },
+      {
+        "key": "un",
+        "value": 2,
+        "note": "未使用"
+      }
+    ]
   }
 ]
