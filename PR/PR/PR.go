@@ -27,14 +27,15 @@ func NewGiteePR() GiteePR {
 	return GiteePR{conf}
 }
 
-func (conf GiteePR) SendGitee(title, head, base string) string {
+func (conf GiteePR) SendGitee(title, head, base, assignees string) string {
 	url := fmt.Sprintf("https://gitee.com/api/v5/repos/%s/%s/pulls", conf.Owner, conf.Repo)
 	// 准备请求的数据，将它们编码成 JSON 格式
 	data := map[string]interface{}{
 		"access_token": conf.Secret,
-		"title":        title, // PR 标题
-		"head":         head,  // 合并分支
-		"base":         base,  // 目标分支
+		"title":        title,     // PR 标题
+		"head":         head,      // 合并分支
+		"base":         base,      // 目标分支
+		"assignees":    assignees, // 审查人员
 	}
 	// 转换为 JSON 格式
 	payload, err := json.Marshal(data)

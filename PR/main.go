@@ -17,7 +17,7 @@ func main() {
 	MyGit.PushBranch(newBranch)
 
 	GiteePR := GitPR.NewGiteePR()
-	Url := GiteePR.SendGitee("test", branch, newBranch)
+	Url := GiteePR.SendGitee("test", branch, newBranch, "lzh123789")
 	fmt.Println(Url)
 	//GiteePR.sendBot(fmt.Sprintf("PR: \n %s分支 合并到 %s分支 \n %s ", branch, newBranch, Url))
 }

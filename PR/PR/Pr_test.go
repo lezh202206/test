@@ -17,7 +17,7 @@ func TestPR(t *testing.T) {
 	fmt.Println(branch)
 
 	GiteePR := NewGiteePR()
-	Url := GiteePR.SendGitee("test", branch, newBranch)
+	Url := GiteePR.SendGitee("test", branch, newBranch, "lzh123789")
 	fmt.Println(Url)
 	GiteePR.sendBot(fmt.Sprintf("PR: \n %s分支 合并到 %s分支 \n %s ", branch, newBranch, Url))
 }
