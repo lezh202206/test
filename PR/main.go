@@ -77,5 +77,5 @@ func hotfix(MyGit GitPR.MyGit, title, audit string) {
 	GiteePR := GitPR.NewGiteePR()
 	Url := GiteePR.SendGitee(title, branch, branchName, audit)
 	fmt.Printf(Url)
-	//GiteePR.SendBot(fmt.Sprintf("PR: \n %s分支 合并到 %s分支 \n %s ", branch, newBranch, Url))
+	GiteePR.SendBot(fmt.Sprintf("PR: \n %s分支 合并到 %s分支 \n %s ", branch, branchName, Url))
 }
