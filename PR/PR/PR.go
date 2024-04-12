@@ -27,7 +27,7 @@ func NewGiteePR() GiteePR {
 	return GiteePR{conf}
 }
 
-func (conf GiteePR) sendGitee(title, head, base string) string {
+func (conf GiteePR) SendGitee(title, head, base string) string {
 	url := fmt.Sprintf("https://gitee.com/api/v5/repos/%s/%s/pulls", conf.Owner, conf.Repo)
 	// 准备请求的数据，将它们编码成 JSON 格式
 	data := map[string]interface{}{
@@ -65,7 +65,7 @@ func (conf GiteePR) sendGitee(title, head, base string) string {
 	return List.HtmlUrl
 }
 
-func (conf GiteePR) sendBot(HtmlUrl string) {
+func (conf GiteePR) sendBot(title string) {
 	url := fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=991cbde3-6963-4adc-a25c-7a6402ab7d38")
 
 	// 准备请求的数据，将它们编码成 JSON 格式
@@ -73,7 +73,7 @@ func (conf GiteePR) sendBot(HtmlUrl string) {
 	message := map[string]interface{}{
 		"msgtype": "text",
 		"text": map[string]interface{}{
-			"content":               "PR: \n" + HtmlUrl + "\n",
+			"content":               title,
 			"mentioned_list":        []string{"乐智辉"},
 			"mentioned_mobile_list": []string{"15879832530"},
 		},

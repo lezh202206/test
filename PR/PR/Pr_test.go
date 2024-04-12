@@ -1,20 +1,23 @@
 package GitPR
 
 import (
+	"fmt"
 	"testing"
 )
 
 func TestPR(t *testing.T) {
 	//确保当前目录是一个Git仓库
-	//repoPath := "/Users/lezh/Desktop/GO/src/miniblog"
-	//
-	//// 检查是否是Git仓库
-	//stdout := GitBase(repoPath, []string{"rev-parse", "--git-dir"})
-	//fmt.Println(stdout.String())
-	//
-	//MyGit := NewMyGit(repoPath)
-	//MyGit.EchoBranch()
+	repoPath := "/Users/lezh/Desktop/GO/src/miniblog"
 
-	Url := NewGiteePR().sendGitee("test", "xxx", "master")
-	NewGiteePR().sendBot(Url)
+	MyGit := NewMyGit(repoPath)
+	branch := MyGit.EchoBranch()
+
+	newBranch := MyGit.CreateBranch()
+	MyGit.PushBranch(newBranch)
+	fmt.Println(branch)
+
+	GiteePR := NewGiteePR()
+	Url := GiteePR.SendGitee("test", branch, newBranch)
+	fmt.Println(Url)
+	GiteePR.sendBot(fmt.Sprintf("PR: \n %s分支 合并到 %s分支 \n %s ", branch, newBranch, Url))
 }
