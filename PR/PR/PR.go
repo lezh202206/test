@@ -66,7 +66,7 @@ func (conf GiteePR) SendGitee(title, head, base, assignees string) string {
 	return List.HtmlUrl
 }
 
-func (conf GiteePR) sendBot(title string) {
+func (conf GiteePR) SendBot(title string) {
 	url := fmt.Sprintf("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=991cbde3-6963-4adc-a25c-7a6402ab7d38")
 
 	// 准备请求的数据，将它们编码成 JSON 格式

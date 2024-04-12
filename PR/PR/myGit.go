@@ -42,7 +42,7 @@ func (mGit MyGit) CreateBranch() string {
 	reader := bufio.NewReader(os.Stdin)
 	branchName, err := reader.ReadString('\n')
 	if err != nil {
-		panic(fmt.Sprintf("读取输入失败:", err))
+		panic(err)
 	}
 
 	// 清理输入的分支名称，去除换行符和空格
@@ -67,4 +67,20 @@ func (mGit MyGit) EchoBranch() string {
 	// 打印当前分支信息
 	fmt.Printf("当前所在分支: %s\n", strings.TrimSpace(stdout.String()))
 	return strings.TrimSpace(stdout.String())
+}
+
+func (mGit MyGit) EchoBranchList() string {
+	stdout := GitBase(mGit.rootPath, []string{"branch", "--list"})
+	return stdout.String()
+}
+
+func (mGit MyGit) BranchExists(branchList []string, branchName string) {
+	for _, branch := range branchList {
+		// 去除分支名中的空格和星号
+		trimmedBranch := strings.TrimSpace(strings.TrimPrefix(branch, "*"))
+		if trimmedBranch == strings.TrimSpace(branchName) {
+			return
+		}
+	}
+	panic("当前输入分支不存在")
 }
