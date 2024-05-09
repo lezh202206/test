@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"github.com/xuri/excelize/v2"
 	"reflect"
+	"strconv"
 	"strings"
+	"unicode/utf16"
 )
 
 const DefaultSheetName = "Sheet1"
@@ -42,7 +44,10 @@ func (e excelWriter) Write(fileName string, sheets []*Sheet) ([]byte, error) {
 			return nil, err
 		}
 
-		// 写表头
+		// 下拉项
+		if err := e.writeDropList(file, sheet.Name, sheet.Headers); err != nil {
+			return nil, err
+		}
 
 		rowIndex := 2
 		// 行号从第2行开始(第一行为表头)
@@ -147,4 +152,63 @@ func (e excelWriter) setTypeByField(sheets []*Sheet) {
 		sheet.itemsValue = itemsValue
 	}
 
+}
+
+func (e excelWriter) writeDropList(f *excelize.File, sheetName string, headers []*Header) error {
+	isCreateSheet := false
+	dropSheetName := sheetName + "sheetName"
+	for colIndex, header := range headers {
+		// excel的列索引从1开始
+		colIndex = colIndex + 1
+
+		dropLen := len(header.DropList)
+		if dropLen <= 0 {
+			continue
+		}
+
+		colName, err := excelize.ColumnNumberToName(colIndex)
+		if err != nil {
+			return err
+		}
+		// 要有下拉的框
+		dvRange := excelize.NewDataValidation(true)
+
+		formula := strings.Join(header.DropList, ",")
+		if excelize.MaxFieldLength > len(utf16.Encode([]rune(formula))) {
+			dvRange.Sqref = fmt.Sprintf("%s%d:%s%d", colName, 2, colName, 1000)
+			err = dvRange.SetDropList(header.DropList)
+			if err != nil {
+				return err
+			}
+		} else {
+			if !isCreateSheet {
+				isCreateSheet = true
+				f.NewSheet(dropSheetName)
+			}
+			// 将下拉写入列数据
+			for i, s := range header.DropList {
+				// 第二行开始写入正式数据
+				if err := f.SetCellStr(dropSheetName, colName+strconv.Itoa(i+2), s); err != nil {
+					return err
+				}
+			}
+			// excel验证数据的起始位置
+			sqrefAxis1, _ := excelize.CoordinatesToCellName(colIndex, 2, true)
+			sqrefAxis2, _ := excelize.CoordinatesToCellName(colIndex, dropLen+1, true)
+			dvRange.Sqref = fmt.Sprintf("%s!%s:%s", dropSheetName, sqrefAxis1, sqrefAxis2)
+			dvRange.SetSqrefDropList(dvRange.Sqref)
+		}
+
+		err = f.AddDataValidation(sheetName, dvRange)
+		if err != nil {
+			return err
+		}
+	}
+	if isCreateSheet {
+		// 隐藏该工作表格
+		if err := f.SetSheetVisible(dropSheetName, false); err != nil {
+			return err
+		}
+	}
+	return nil
 }

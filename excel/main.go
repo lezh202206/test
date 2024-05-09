@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"gorm.io/gorm/utils"
 	"test/db"
 	"test/excel/excel"
 	"test/models"
@@ -25,9 +26,15 @@ func main() {
 		exportList = append(exportList, item)
 	}
 
+	var drop1 []string
+	for i := 100; i < 200; i++ {
+		drop1 = append(drop1, utils.ToString(i))
+	}
+
 	headerList := []*excel.Header{
-		{Name: "商户ID", Field: "MerchantId", ColWidth: 8},
-		{Name: "OpenID", Field: "Openid", ColWidth: 14},
+		{Name: "商户ID", Field: "MerchantId", ColWidth: 8, DropList: []string{"模板", "模板1"}},
+		{Name: "OpenID", Field: "Openid", ColWidth: 14, DropList: []string{"OpenID1", "OpenID2"}},
+		{Name: "下拉选项", Field: "Drop", ColWidth: 14, DropList: drop1},
 	}
 	sheets := []*excel.Sheet{{
 		Name:    "test_1",
@@ -35,7 +42,7 @@ func main() {
 		Items:   &exportList,
 	}}
 
-	_, err := excel.NewExcelWriter().Write("xxx", sheets)
+	_, err := excel.NewExcelWriter().Write("下拉选项", sheets)
 	if err != nil {
 		return
 	}
