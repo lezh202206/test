@@ -29,3 +29,29 @@ type MultiPage struct {
 	Sections  []multiEpisodeData `json:"sections"`
 	VideoData multiPageVideoData `json:"videoData"`
 }
+
+type BangumiEpData struct {
+	Aid         int    `json:"aid"`
+	Cid         int    `json:"cid"`
+	BVid        string `json:"bvid"`
+	ID          int    `json:"id"`
+	EpID        int    `json:"ep_id"`
+	TitleFormat string `json:"titleFormat"`
+	LongTitle   string `json:"long_title"`
+}
+
+type BangumiData struct {
+	EpInfo BangumiEpData   `json:"epInfo"`
+	EpList []BangumiEpData `json:"epList"`
+}
+
+type BilibiliOptions struct {
+	Url      string
+	Html     string
+	Bangumi  bool
+	Aid      int
+	Cid      int
+	Bvid     string
+	Page     int
+	Subtitle string
+}

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	request2 "test/video/request"
+	"test/video/videer"
 	"test/video/videer/bili"
 )
 
@@ -17,9 +18,19 @@ func main() {
 		return
 	}
 
-	pageData, err := bili.GetMultiPageData(html)
+	option := videer.Options{
+		Playlist:         false,
+		Items:            "",
+		ItemStart:        1,
+		ItemEnd:          0,
+		ThreadNumber:     10,
+		Cookie:           "",
+		EpisodeTitleOnly: false,
+	}
+
+	data, err := bili.Action(url, html, option)
 	if err != nil {
 		return
 	}
-	fmt.Println(pageData)
+	fmt.Println(data)
 }
