@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	url     = "https://www.bilibili.com/video/BV1E142127b2/?spm_id_from=333.1007.tianma.1-1-1.click&vd_source=7866b2f011975afa8886d726f57673d2"
+	url     = "https://www.bilibili.com/bangumi/play/ep198218?spm_id_from=333.337.0.0"
 	referer = "https://www.bilibili.com"
 )
 

@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/cookiejar"
+	"test/video/config"
 	"time"
 )
 
@@ -32,6 +33,9 @@ func Request(method, url string, body io.Reader, headers map[string]string) (*ht
 	req, err := http.NewRequest(method, url, body)
 	if err != nil {
 		return nil, errors.WithStack(err)
+	}
+	for k, v := range config.FakeHeaders {
+		req.Header.Set(k, v)
 	}
 	for k, v := range headers {
 		req.Header.Set(k, v)
