@@ -55,3 +55,38 @@ type BilibiliOptions struct {
 	Page     int
 	Subtitle string
 }
+
+type dashStream struct {
+	ID        int    `json:"id"`
+	BaseURL   string `json:"baseUrl"`
+	Bandwidth int    `json:"bandwidth"`
+	MimeType  string `json:"mimeType"`
+	Codecid   int    `json:"codecid"`
+	Codecs    string `json:"codecs"`
+}
+
+type dashStreams struct {
+	Video []dashStream `json:"video"`
+	Audio []dashStream `json:"audio"`
+}
+
+type DashInfo struct {
+	CurQuality  int         `json:"quality"`
+	Description []string    `json:"accept_description"`
+	Quality     []int       `json:"accept_quality"`
+	Streams     dashStreams `json:"dash"`
+	DURLFormat  string      `json:"format"`
+	DURLs       []dURL      `json:"durl"`
+}
+
+type dURL struct {
+	URL  string `json:"url"`
+	Size int64  `json:"size"`
+}
+
+type Dash struct {
+	Code    int      `json:"code"`
+	Message string   `json:"message"`
+	Data    DashInfo `json:"data"`
+	Result  DashInfo `json:"result"`
+}

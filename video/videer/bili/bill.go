@@ -9,8 +9,29 @@ import (
 	"test/models"
 	"test/utils"
 	"test/video/parser"
+	"test/video/request"
 	"test/video/videer"
 )
+
+const (
+	DataTypeVideo      = "video"
+	referer            = "https://www.bilibili.com"
+	bilibiliBangumiAPI = "https://api.bilibili.com/pgc/player/web/playurl?"
+)
+
+var qualityString = map[int]string{
+	127: "超高清 8K",
+	120: "超清 4K",
+	116: "高清 1080P60",
+	74:  "高清 720P60",
+	112: "高清 1080P+",
+	80:  "高清 1080P",
+	64:  "高清 720P",
+	48:  "高清 720P",
+	32:  "清晰 480P",
+	16:  "流畅 360P",
+	15:  "流畅 360P",
+}
 
 func getSubTitleCaptionPart(aid, cid int) *videer.CaptionPart {
 	return nil
@@ -36,8 +57,59 @@ func getTitle(html string, opts models.BilibiliOptions, bilOptions videer.Option
 	}
 	return title, nil
 }
-func getStreams(aid, cid int) map[string]*videer.Stream {
-	return nil
+
+func genBliApi(cid, quality int, bvid string) string {
+	params := fmt.Sprintf(
+		"cid=%d&bvid=%s&qn=%d&type=&otype=json&fourk=1&fnver=0&fnval=16",
+		cid, bvid, quality,
+	)
+	return bilibiliBangumiAPI + params
+}
+func getStreams(options models.BilibiliOptions) (map[string]*videer.Stream, error) {
+	api := genBliApi(options.Cid, 127, options.Bvid)
+
+	jsonString, err := request.Get(api, referer, nil)
+	if err != nil {
+		return nil, err
+	}
+	var data models.Dash
+	err = json.Unmarshal([]byte(jsonString), &data)
+	if err != nil {
+		return nil, err
+	}
+
+	var dashData models.DashInfo
+	if data.Data.Description == nil {
+		dashData = data.Result
+	} else {
+		dashData = data.Data
+	}
+
+	streams := make(map[string]*videer.Stream, len(dashData.Quality))
+
+	for _, durl := range dashData.DURLs {
+		var ext string
+		switch dashData.DURLFormat {
+		case "flv", "flv480":
+			ext = "flv"
+		case "mp4", "hdmp4": // nolint
+			ext = "mp4"
+		}
+
+		parts := make([]*videer.Part, 0, 1)
+		parts = append(parts, &videer.Part{
+			URL:  durl.URL,
+			Size: durl.Size,
+			Ext:  ext,
+		})
+
+		streams[strconv.Itoa(dashData.CurQuality)] = &videer.Stream{
+			Parts:   parts,
+			Size:    durl.Size,
+			Quality: qualityString[dashData.CurQuality],
+		}
+	}
+	return streams, nil
 }
 
 func bilibiliDownload(opt models.BilibiliOptions, options videer.Options) (data *videer.Data) {
@@ -45,13 +117,17 @@ func bilibiliDownload(opt models.BilibiliOptions, options videer.Options) (data 
 	if err != nil {
 		return videer.EmptyData(opt.Url, err)
 	}
+	streams, err := getStreams(opt)
+	if err != nil {
+		return videer.EmptyData(opt.Url, err)
+	}
 
 	data = &videer.Data{
-		URL:   opt.Url,
-		Site:  videer.SiteNameBilBil,
-		Type:  videer.DataTypeVideo,
-		Title: title,
-		//Streams: getStreams(),
+		URL:     opt.Url,
+		Site:    videer.SiteNameBilBil,
+		Type:    videer.DataTypeVideo,
+		Title:   title,
+		Streams: streams,
 		Captions: map[string]*videer.CaptionPart{
 			"danmaku": {
 				Part: videer.Part{
@@ -126,13 +202,18 @@ func extractNormalVideo(url, html string, option videer.Options) ([]*videer.Data
 	return nil, nil
 }
 
-func Action(url, html string, option videer.Options) ([]*videer.Data, error) {
+func Action(url, html string, option videer.Options) (videos []*videer.Data, err error) {
 	option.ThreadNumber = 1
 	if strings.Contains(url, "bangumi") {
-		// handle bangumi
-		return extractBangumi(url, html, option)
+		videos, err = extractBangumi(url, html, option)
+		if err != nil {
+			panic(err)
+		}
 	} else {
-		// handle normal video
-		return extractNormalVideo(url, html, option)
+		videos, err = extractNormalVideo(url, html, option)
+		if err != nil {
+			panic(err)
+		}
 	}
+	return videos, nil
 }
