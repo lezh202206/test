@@ -2,23 +2,35 @@ package main
 
 import (
 	"fmt"
-	"os/exec"
+	"time"
+
+	"github.com/cheggaaa/pb/v3"
 )
 
-func downloadBilibiliVideo(videoURL string) error {
-	cmd := exec.Command("annie", "-o", "%(title)s.%(ext)s", videoURL)
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("下载视频失败：%v\n%s", err, output)
-	}
-	fmt.Println("视频下载完成！")
-	return nil
-}
-
 func main() {
-	videoURL := "https://www.bilibili.com/video/BV1Qz42117gt/?spm_id_from=333.1007.tianma.1-1-1.click&vd_source=7866b2f011975afa8886d726f57673d2" // 替换为你想下载的 Bilibili 视频链接
-	err := downloadBilibiliVideo(videoURL)
-	if err != nil {
-		fmt.Println(err)
+	// 设置进度条的总大小
+	size := int64(1000)
+
+	// 定义自定义模板
+	tmpl := `{{counters .}} {{bar . "[" "=" ">>" "-" "]"}} {{speed .}} {{percent . | cyan}} {{rtime .}}`
+
+	// 创建进度条
+	bar := pb.New64(size).
+		Set(pb.Bytes, true).
+		SetMaxWidth(1000).
+		SetTemplate(pb.ProgressBarTemplate(tmpl))
+
+	// 开始进度条
+	bar.Start()
+
+	// 模拟工作
+	for i := int64(0); i < size; i++ {
+		time.Sleep(time.Millisecond * 10) // 模拟工作负载
+		bar.Increment()                   // 进度条前进
 	}
+
+	// 完成进度条
+	bar.Finish()
+
+	fmt.Println("工作完成")
 }

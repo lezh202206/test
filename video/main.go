@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"test/downloader"
 	request2 "test/video/request"
 	"test/video/videer"
 	"test/video/videer/bili"
@@ -32,5 +32,35 @@ func main() {
 	if err != nil {
 		return
 	}
-	fmt.Println(data)
+
+	defaultDownloader := downloader.New(downloader.Options{
+		Silent:         false,
+		InfoOnly:       false,
+		Stream:         "",
+		AudioOnly:      false,
+		Refer:          "",
+		OutputPath:     "",
+		OutputName:     "",
+		FileNameLength: 255,
+		Caption:        false,
+		MultiThread:    false,
+		ThreadNumber:   10,
+		RetryTimes:     10,
+		ChunkSizeMB:    1,
+		UseAria2RPC:    false,
+		Aria2Token:     "",
+		Aria2Method:    "http",
+		Aria2Addr:      "localhost:6800",
+	})
+
+	errors := make([]error, 0)
+	for _, item := range data {
+		if item.Err != nil {
+			errors = append(errors, item.Err)
+			continue
+		}
+		if err = defaultDownloader.Download(item); err != nil {
+			errors = append(errors, err)
+		}
+	}
 }

@@ -104,8 +104,10 @@ func getStreams(options models.BilibiliOptions) (map[string]*videer.Stream, erro
 		})
 
 		streams[strconv.Itoa(dashData.CurQuality)] = &videer.Stream{
+			Ext:     ext,
 			Parts:   parts,
 			Size:    durl.Size,
+			ID:      strconv.Itoa(dashData.CurQuality),
 			Quality: qualityString[dashData.CurQuality],
 		}
 	}
