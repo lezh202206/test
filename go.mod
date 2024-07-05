@@ -6,6 +6,7 @@ toolchain go1.22.0
 
 require (
 	github.com/PuerkitoBio/goquery v1.9.2
+	github.com/ahmetb/go-linq/v3 v3.2.0
 	github.com/cheggaaa/pb/v3 v3.1.5
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fatih/color v1.15.0
