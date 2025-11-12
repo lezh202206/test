@@ -7,7 +7,7 @@ type Node struct {
 	next *Node
 }
 
-// LinkNodeList 链表
+// LinkNodeList 单链表
 type LinkNodeList struct {
 	head *Node
 	size int
@@ -83,6 +83,7 @@ func (l *LinkNodeList) InsertAtPosition(index, v int) {
 	l.size++
 }
 
+// DelAtPosition 删除指定节点
 func (l *LinkNodeList) DelAtPosition(index int) {
 	if index < 0 || index > l.size-1 {
 		fmt.Printf("数组越界")
@@ -92,7 +93,7 @@ func (l *LinkNodeList) DelAtPosition(index int) {
 	for i := 0; i < index; i++ {
 		cur = cur.next
 	}
-	temp := cur.next.next
-	cur.next = temp
-	l.size--
+	temp := cur.next.next // 将下级节点给临时变量 也就是右边的链
+	cur.next = temp       // 把右链直接给左链的 next
+	l.size--              // 数量减 1
 }
