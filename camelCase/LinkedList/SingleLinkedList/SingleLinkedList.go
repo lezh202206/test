@@ -165,6 +165,7 @@ func (l *LinkNodeList) DelLocationNode(index int) {
 	}
 }
 
+// 单链表
 func Do() {
 	nodeList := &LinkNodeList{}
 	nodeList.AppendEnd(3)
