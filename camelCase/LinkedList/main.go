@@ -17,11 +17,16 @@ func main() {
 	nodeList := &LinkNodeList{}
 	nodeList.Append(1)
 	nodeList.Append(2)
+	nodeList.Append(2)
+	nodeList.Append(3)
+	nodeList.DelAtPosition(1)
 	nodeList.Append(4)
-	nodeList.InsertAtPosition(2, 3)
 	nodeList.Append(5)
 	nodeList.Append(7)
 	nodeList.InsertAtPosition(5, 6)
+	nodeList.InsertAtPosition(7, 8)
+	nodeList.InsertAtPosition(7, 8)
+	nodeList.DelAtPosition(7)
 	nodeList.Println()
 }
 
@@ -76,4 +81,18 @@ func (l *LinkNodeList) InsertAtPosition(index, v int) {
 	newNode.next = cur.next // 要先把右链先填充到 新链的 next 中
 	cur.next = newNode      // 把新链 放到 左链的 next 中
 	l.size++
+}
+
+func (l *LinkNodeList) DelAtPosition(index int) {
+	if index < 0 || index > l.size-1 {
+		fmt.Printf("数组越界")
+		return
+	}
+	cur := l.head
+	for i := 0; i < index; i++ {
+		cur = cur.next
+	}
+	temp := cur.next.next
+	cur.next = temp
+	l.size--
 }
