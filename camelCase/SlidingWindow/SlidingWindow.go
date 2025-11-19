@@ -3,8 +3,8 @@ package SlidingWindow
 import "fmt"
 
 func Do() {
-	var A = []int32{1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3}
-	var B = []int32{1, 2, 1, 2, 3, 1}
+	var A = []int32{1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 3}
+	var B = []int32{1, 2}
 
 	//fmt.Println(SlidingWindow(A, B))
 	fmt.Println(KMP(A, B))
@@ -93,6 +93,7 @@ func SlidingWindow(A, B []int32) (int, int) {
 //}
 
 func KMP(A, B []int32) (int, int) {
+	fmt.Println(GetALLIndex(A, B, LPS(B)))
 	return GetIndex(A, B, LPS(B))
 }
 
@@ -154,4 +155,34 @@ func GetIndex(A, B []int32, LPS []int) (int, int) {
 		}
 	}
 	return 0, 0
+}
+
+type allIndex struct {
+	left, right int
+}
+
+func GetALLIndex(A, B []int32, LPS []int) []allIndex {
+	var _allIndex = make([]allIndex, 0)
+	for AIndex, BIndex := 0, 0; AIndex < len(A); {
+		if A[AIndex] == B[BIndex] {
+			AIndex++
+			BIndex++
+		}
+
+		if BIndex == len(B) {
+			start := AIndex - BIndex
+			_allIndex = append(_allIndex, allIndex{start, start + len(B) - 1}) // 把结果都加进去
+			BIndex = 0                                                         // 循环匹配
+			continue
+		}
+
+		if AIndex < len(A) && A[AIndex] != B[BIndex] {
+			if BIndex != 0 {
+				BIndex = LPS[BIndex-1]
+			} else {
+				AIndex++
+			}
+		}
+	}
+	return _allIndex
 }
