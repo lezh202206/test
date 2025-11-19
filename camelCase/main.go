@@ -1,8 +1,6 @@
 package main
 
-import (
-	"test/camelCase/Queue/CircularQueue"
-)
+import "test/camelCase/SlidingWindow"
 
 func main() {
 	//SingleLinkedList.Do() // 单链表
@@ -10,5 +8,7 @@ func main() {
 
 	//StackList.Do()     // 栈
 
-	CircularQueue.Do() // 循环队列
+	//CircularQueue.Do() // 循环队列
+
+	SlidingWindow.Do()
 }
