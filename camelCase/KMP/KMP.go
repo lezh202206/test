@@ -6,6 +6,8 @@ func Do() (int, int) {
 	var A = []int32{1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3, 1, 2, 1, 2, 1, 1}
 	var B = []int32{1, 2, 1, 2, 1, 1}
 
+	computeCustomLPS(B)
+
 	fmt.Println(GetALLIndex(A, B, LPS(B))) //全部的匹配的节点
 	return GetIndex(A, B, LPS(B))          // 第一个
 }
@@ -98,4 +100,32 @@ func GetALLIndex(A, B []int32, LPS []int) []allIndex {
 		}
 	}
 	return _allIndex
+}
+
+func computeCustomLPS(arr []int32) []int {
+	n := len(arr)
+	lps := make([]int, n)
+
+	for i := 0; i < n; i++ {
+		maxLen := 0
+		// 检查所有可能的前缀后缀
+		for length := 1; length <= i; length++ {
+			prefix := arr[:length]
+			suffix := arr[i-length+1 : i+1]
+
+			// 检查前缀和后缀是否相等
+			equal := true
+			for j := 0; j < length; j++ {
+				if prefix[j] != suffix[j] {
+					equal = false
+					break
+				}
+			}
+			if equal && length > maxLen {
+				maxLen = length
+			}
+		}
+		lps[i] = maxLen
+	}
+	return lps
 }
