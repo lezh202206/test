@@ -1,8 +1,6 @@
 package main
 
-import (
-	"test/camelCase/Tbtree"
-)
+import "test/camelCase/Tbtree"
 
 func main() {
 	//SingleLinkedList.Do() // 单链表
