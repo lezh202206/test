@@ -16,8 +16,8 @@ func NewNode(v int) *Node {
 	return &Node{Val: v}
 }
 
-// 线索化 可以 参照同级目录的图示
-func depthTree(root *Node) {
+// 中序线索化 可以 参照同级目录的图示in.png
+func threadInOrder(root *Node) {
 	var per *Node
 	var dfs = func(n *Node) {}
 
@@ -52,6 +52,43 @@ func depthTree(root *Node) {
 	dfs(root)
 }
 
+// 先序线索化 可以 参照同级目录的图示 per.png
+func threadPerOrder(root *Node) {
+	var perv *Node
+	var dfs = func(n *Node) {}
+
+	dfs = func(n *Node) {
+		if n == nil {
+			return
+		}
+
+		// 左边 前驱节点就是左边
+		// 右边 前驱节点就是右边
+		if n.Left == nil { // 左节点为空说明到底了
+			n.LThread = true // 标注为 线索
+			n.Left = perv    // 如果是左节点 前驱就是 上个节点
+		}
+
+		// 当前节点的 右线索节点应在下一次填充
+		if perv != nil && perv.Right == nil {
+			perv.RThread = true // 标注为 线索
+			perv.Right = n      // 后继节点 如果是右节点 前驱就是现在节点
+		}
+
+		perv = n
+		// 如果是线索节点则跳过
+		if n.Left != nil && !n.LThread {
+			dfs(n.Left)
+		}
+
+		if n.Right != nil && !n.RThread {
+			dfs(n.Right)
+		}
+
+	}
+	dfs(root)
+}
+
 // buildSampleTree 返回一个示例二叉树，结构：
 //
 //	    4
@@ -59,7 +96,7 @@ func depthTree(root *Node) {
 //	  2   6
 //	 / \ / \
 //	1  3 5  7
-func buildSampleTree() *Node {
+func buildInSampleTree() *Node {
 	n1 := NewNode(1)
 	n2 := NewNode(2)
 	n3 := NewNode(3)
@@ -72,6 +109,28 @@ func buildSampleTree() *Node {
 	n2.Left, n2.Right = n1, n3
 	n6.Left, n6.Right = n5, n7
 	return n4
+}
+
+// 构建示例二叉树
+//
+//	    1
+//	   / \
+//	  2   3
+//	 / \
+//	4   5
+func buildPerSampleTre1e() *Node {
+	n1 := NewNode(1)
+	n2 := NewNode(2)
+	n3 := NewNode(3)
+	n4 := NewNode(4)
+	n5 := NewNode(5)
+	n6 := NewNode(6)
+	n7 := NewNode(7)
+
+	n1.Left, n1.Right = n2, n3
+	n2.Left, n2.Right = n4, n5
+	n3.Left, n3.Right = n6, n7
+	return n1
 }
 
 // leftmost 返回以 node 为根的子树中的最左（中序开始点）
@@ -103,14 +162,29 @@ func InOrderTraversal(root *Node, visit func(v int)) {
 	}
 }
 
+// PerOrderTraversal 使用线索进行中序遍历（无栈、无递归）
+func PerOrderTraversal(root *Node, visit func(v int)) {
+	// 从根的最左节点开始
+	cur := root
+	for cur != nil {
+		visit(cur.Val)
+		// 只打印非线索节点(子节点)
+		if cur.Left != nil && !cur.LThread {
+			cur = cur.Left
+		} else {
+			cur = cur.Right
+		}
+	}
+}
+
 // 示例：打印中序
 func Do() {
-	root := buildSampleTree()
-	// 未线索化前，如果你想，也可以验证普通中序遍历（这里略）
-	depthTree(root)
+	root := buildPerSampleTre1e()
 
-	fmt.Print("中序遍历（线索）: ")
-	InOrderTraversal(root, func(v int) {
+	threadPerOrder(root)
+
+	fmt.Print("先序遍历（线索）: ")
+	PerOrderTraversal(root, func(v int) {
 		fmt.Printf("%d ", v)
 	})
 	fmt.Println()

@@ -1,6 +1,8 @@
 package main
 
-import "test/camelCase/Tbtree"
+import (
+	"test/camelCase/Find"
+)
 
 func main() {
 	//SingleLinkedList.Do() // 单链表
@@ -15,5 +17,9 @@ func main() {
 
 	//KMP.Do()    // 子串第一次出现的位置
 
-	Tbtree.Do() // 线索二叉树
+	//Tbtree.Do() // 线索二叉树
+
+	//Graph.Prim() // 图 Prim算法 最小生成数
+	
+	Find.BinartSearch() // 二分法查询
 }

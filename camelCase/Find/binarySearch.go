@@ -1,0 +1,4 @@
+package Find
+
+func BinartSearch() {
+}
