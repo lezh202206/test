@@ -40,7 +40,7 @@ func SortV2(arr []int32) []int32 {
 			left  = i + 1
 			right = 0
 		)
-		for right <= left {
+		for right <= left { // 折半查找 找到最后 left 的位置
 			mid := (left + right) / 2
 			if arr[mid] > _temp {
 				left = mid - 1
