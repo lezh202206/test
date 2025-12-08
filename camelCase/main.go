@@ -1,7 +1,7 @@
 package main
 
 import (
-	"test/camelCase/Find/LinearTable"
+	"test/camelCase/Find/InsertSort"
 )
 
 func main() {
@@ -21,5 +21,7 @@ func main() {
 
 	//Graph.Prim() // 图 Prim算法 最小生成数
 
-	LinearTable.BinarySearch() // 线性表 (顺序表)二分法查询
+	//LinearTable.BinarySearch() // 线性表 (顺序表)二分法查询
+
+	InsertSort.InsertSort() // 插入排序
 }
