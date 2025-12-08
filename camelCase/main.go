@@ -1,7 +1,7 @@
 package main
 
 import (
-	"test/camelCase/Find/InsertSort"
+	"test/camelCase/Find/BubbleSort"
 )
 
 func main() {
@@ -23,5 +23,7 @@ func main() {
 
 	//LinearTable.BinarySearch() // 线性表 (顺序表)二分法查询
 
-	InsertSort.InsertSort() // 插入排序
+	//InsertSort.InsertSort() // 插入排序
+
+	BubbleSort.BubbleSort() // 冒泡排序
 }
