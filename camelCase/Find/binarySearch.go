@@ -1,4 +1,0 @@
-package Find
-
-func BinartSearch() {
-}

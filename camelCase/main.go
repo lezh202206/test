@@ -1,7 +1,7 @@
 package main
 
 import (
-	"test/camelCase/Find"
+	"test/camelCase/Find/LinearTable"
 )
 
 func main() {
@@ -20,6 +20,6 @@ func main() {
 	//Tbtree.Do() // 线索二叉树
 
 	//Graph.Prim() // 图 Prim算法 最小生成数
-	
-	Find.BinartSearch() // 二分法查询
+
+	LinearTable.BinarySearch() // 线性表 (顺序表)二分法查询
 }
