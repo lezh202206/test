@@ -17,7 +17,7 @@ func Sort(arr []int32) {
 				flag = false
 			}
 		}
-		if flag {
+		if flag { // flag 始终为 true 的话 证明后面排序都是对的
 			return
 		}
 	}
