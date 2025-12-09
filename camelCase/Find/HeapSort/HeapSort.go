@@ -39,8 +39,8 @@ func heapifyDown(arr []int32, lastNodeIndex, len int) {
 		return
 	}
 
-	swapElement(arr, lastNodeIndex, largerChild) // 交换最大节点
-	heapifyDown(arr, largerChild, len)           // 再看最大节点的这边是否受影响 有影响就往下处理
+	swapElement(arr, lastNodeIndex, largerChild) // 交换最大节点 也就是最大堆顶
+	heapifyDown(arr, largerChild, len)           // 再看左/右孩子的这边是否受影响 有影响就往下处理
 }
 
 func swapElement[T comparable](arr []T, i, j int) {
