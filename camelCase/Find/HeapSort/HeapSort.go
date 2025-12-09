@@ -6,26 +6,23 @@ func HeapSort() {
 	var arr = []int32{53, 17, 78, 9, 45, 65, 87, 32}
 	//var arr = []int32{7, 1, 2, 6, 5, 3, 8, 9, 10}
 
-	/**
-	堆排序
-	*/
-	for i := len(arr) - 1; i >= 0; i-- {
-		buildMaxHeap(arr, i+1)
-		swapElement(arr, 0, i)
+	for i := len(arr) - 1; i >= 0; i-- { // 递减是因为 每次下沉后最后一个是有序的
+		buildMaxHeap(arr, i+1) //构建 大堆顶 也就是把最大的值放到堆顶
+		swapElement(arr, 0, i) // 放到元素末尾 后续遍历不会影响他
 	}
 	fmt.Println(arr)
 }
 
 func buildMaxHeap(arr []int32, len int) {
 	for lastNodeIndex := len/2 - 1; lastNodeIndex >= 0; lastNodeIndex-- { // 多少个分支结点就循环几次
-		heapifyDown(arr, lastNodeIndex, len)
+		heapifyDown(arr, lastNodeIndex, len) // 堆 下沉 替换
 	}
 }
 
 func heapifyDown(arr []int32, lastNodeIndex, len int) {
 	var (
-		leftChildIndex  = 2*lastNodeIndex + 1
-		rightChildIndex = leftChildIndex + 1
+		leftChildIndex  = 2*lastNodeIndex + 1 // 二叉树中的左孩子
+		rightChildIndex = leftChildIndex + 1  // 二叉树中的右孩子
 	)
 	// 左孩子不存在 说明 也没有右孩子 (从索引下标角度)
 	if leftChildIndex >= len {
