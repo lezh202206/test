@@ -1,7 +1,7 @@
 package main
 
 import (
-	"test/camelCase/Find/FastSort"
+	"test/camelCase/Find/HeapSort"
 )
 
 func main() {
@@ -27,5 +27,7 @@ func main() {
 
 	//BubbleSort.BubbleSort() // 冒泡排序
 
-	FastSort.FastSort() // 快速排序
+	//FastSort.FastSort() // 快速排序
+
+	HeapSort.HeapSort() // 堆排序
 }
