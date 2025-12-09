@@ -21,8 +21,8 @@ func buildMaxHeap(arr []int32, len int) {
 
 func heapifyDown(arr []int32, lastNodeIndex, len int) {
 	var (
-		leftChildIndex  = 2*lastNodeIndex + 1 // 二叉树中的左孩子
-		rightChildIndex = leftChildIndex + 1  // 二叉树中的右孩子
+		leftChildIndex  = 2*lastNodeIndex + 1 // 二叉树中的左孩子 看图
+		rightChildIndex = leftChildIndex + 1  // 二叉树中的右孩子 看图
 	)
 	// 左孩子不存在 说明 也没有右孩子 (从索引下标角度)
 	if leftChildIndex >= len {
