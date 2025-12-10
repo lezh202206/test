@@ -4,7 +4,7 @@ import "fmt"
 
 func MergeSort() {
 	var arr = []int32{16, 24, 66, 45, 21, 24, 33}
-	Sort(arr, 1, len(arr)-1)
+	Sort(arr, 0, len(arr)-1)
 	fmt.Println(arr)
 }
 
@@ -21,21 +21,29 @@ func Sort(arr []int32, left, right int) {
 func Merge(sourceArr []int32, leftStart, rightEnd int) {
 	tempArr := copyBack(sourceArr, leftStart, rightEnd)
 	/**
-	定义 6 个下标 分别为
-	左数组起始 leftStart
-	左数组结束 通过中枢确定
-	中枢下标 通过这个中枢确定左右两边数组 （中枢下标归为左边数组）
-	右数组起始
-	右数组结束 rightEnd
-	原数组下标 正常来说是 0 这里应该保持和左数组起始下标保持同步
+	这里的坐标都是给临时数组的
+	临时数组是由原数组 复制过来的
+	区别在于 始终从 0 开始 这是重点 ！！！！
+
+	tempLeftEnd    = mid - leftStart
+	举例
+	leftStart = 3
+	rightEnd  = 7
+	mid = (3 + 7) / 2 = 5
+	原数组下标 → tempArr 下标
+	3 → 0
+	4 → 1
+	5 → 2
+	6 → 3
+	7 → 4
+
 	*/
 	var (
-		mid           = (rightEnd + leftStart) / 2
-		tempLeftStart int
-		tempLeftEnd   = mid - leftStart
-
+		mid            = (rightEnd + leftStart) / 2
+		tempLeftStart  int               // 临时数组永远都是从 0 开始
+		tempLeftEnd    = mid - leftStart // 因为 tempArr 的下标从 0 开始，而 mid 是原数组的下标，必须减去 leftStart 才能映射到 tempArr 的正常索引
 		tempRightStart = tempLeftEnd + 1
-		tempRightEnd   = rightEnd - leftStart
+		tempRightEnd   = len(tempArr) - 1
 		sourceArrIndex = leftStart
 	)
 	/**
