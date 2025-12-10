@@ -9,18 +9,15 @@ func MergeSort() {
 }
 
 func Sort(arr []int32, leftStart, rightEnd int) {
-	if leftStart >= rightEnd {
+	if leftStart >= rightEnd { // 重合了 只有一个元素 不需要循环 left > right 是异常情况无需处理
 		return
 	}
 
 	mid := (leftStart + rightEnd) / 2
-
-	// 左右排序
-	Sort(arr, leftStart, mid)
-	Sort(arr, mid+1, rightEnd)
-
-	// 最后合并
 	Merge(arr, leftStart, rightEnd)
+	Sort(arr, leftStart, mid)  // 左边数组一直递归下去
+	Sort(arr, mid+1, rightEnd) // 右边数组一直递归下去
+
 }
 
 func Merge(sourceArray []int32, leftStart, rightEnd int) {
@@ -30,15 +27,15 @@ func Merge(sourceArray []int32, leftStart, rightEnd int) {
 	tempArray := copyBack(sourceArray, leftStart, rightEnd)
 
 	// temp 内部的对应下标要从 0 开始计算
-	left := 0
-	right := mid - leftStart + 1
-	k := leftStart // k 表示添加到原数组的下标
+	left := 0                    // 左数组下标起点
+	right := mid - leftStart + 1 // 右数组下标起点
+	k := leftStart               // k 表示添加到原数组的下标
 
-	leftEnd := mid - leftStart
-	rightEndTemp := rightEnd - leftStart
+	leftEnd := mid - leftStart           // 左数组下标终点
+	rightEndTemp := rightEnd - leftStart // 右数组下标终点
 
 	// 合并左右
-	for left <= leftEnd && right <= rightEndTemp {
+	for left <= leftEnd && right <= rightEndTemp { // 只要两个左右指针都没到各自的终点就一直循环
 		if tempArray[left] <= tempArray[right] {
 			sourceArray[k] = tempArray[left]
 			left++
