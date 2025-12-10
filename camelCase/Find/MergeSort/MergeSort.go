@@ -3,30 +3,42 @@ package MergeSort
 import "fmt"
 
 func MergeSort() {
-	//var arr = []int32{49, 38, 65, 97, 76, 13, 27, 49}
 	var arr = []int32{16, 24, 37, 45, 21, 24, 33}
 	Sort(arr, 0, len(arr)-1)
 	fmt.Println(arr)
 }
 
 func Sort(arr []int32, leftStart, rightEnd int) {
-	if leftStart < rightEnd {
-		Merge(arr, leftStart, rightEnd)
-		Sort(arr, leftStart, len(arr)/2)  // 左排序
-		Sort(arr, len(arr)/2+1, len(arr)) // 右排序
+	if leftStart >= rightEnd {
+		return
 	}
+
+	mid := (leftStart + rightEnd) / 2
+
+	// 左右排序
+	Sort(arr, leftStart, mid)
+	Sort(arr, mid+1, rightEnd)
+
+	// 最后合并
+	Merge(arr, leftStart, rightEnd)
 }
 
 func Merge(sourceArray []int32, leftStart, rightEnd int) {
-	var (
-		tempArray = copyBack(sourceArray, leftStart, rightEnd)
-		mid       = len(sourceArray) / 2 // 中枢 划分左右数组 中枢包含在左边数组中
-		left      = leftStart            // 左边的起始位置
-		right     = mid + 1              // 右边数组起始位置 中枢下标+1
-		k         int                    // 每次改sourceArray 都会+1 最终 会等于 len
-	)
+	mid := (leftStart + rightEnd) / 2
 
-	for k = left; left <= mid && right < len(sourceArray); k++ {
+	// copy 当前区间的数据
+	tempArray := copyBack(sourceArray, leftStart, rightEnd)
+
+	// temp 内部的对应下标要从 0 开始计算
+	left := 0
+	right := mid - leftStart + 1
+	k := leftStart // k 表示添加到原数组的下标
+
+	leftEnd := mid - leftStart
+	rightEndTemp := rightEnd - leftStart
+
+	// 合并左右
+	for left <= leftEnd && right <= rightEndTemp {
 		if tempArray[left] <= tempArray[right] {
 			sourceArray[k] = tempArray[left]
 			left++
@@ -34,28 +46,28 @@ func Merge(sourceArray []int32, leftStart, rightEnd int) {
 			sourceArray[k] = tempArray[right]
 			right++
 		}
+		k++
 	}
 
-	for left < mid+1 { // mid 是左边数组的边界 +1是因为下班为 0 开始的
+	// 剩余左边
+	for left <= leftEnd { // 右边的数组已经全部赋值完 把左边剩下的还原到原数组
 		sourceArray[k] = tempArray[left]
-		k++
 		left++
+		k++
 	}
 
-	for right < len(sourceArray) { // len(sourceArray) 是右边数组的边界
+	// 剩余右边
+	for right <= rightEndTemp { // 左边的数组已经全部赋值完 把右边剩下的还原到原数组
 		sourceArray[k] = tempArray[right]
-		k++
 		right++
+		k++
 	}
 }
 
 func copyBack(sourceArray []int32, leftPointer, rightPointer int) []int32 {
-	// 一个数组拆为分为左右两边
-	var (
-		tempArray = make([]int32, len(sourceArray))
-	)
-	for index, v := range sourceArray[leftPointer : rightPointer+1] {
-		tempArray[index] = v
+	tempArray := make([]int32, rightPointer-leftPointer+1)
+	for i := leftPointer; i <= rightPointer; i++ { // 只需要复制 对应容量的数据 不需要全部
+		tempArray[i-leftPointer] = sourceArray[i]
 	}
 	return tempArray
 }
