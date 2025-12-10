@@ -1,8 +1,6 @@
 package main
 
-import (
-	"test/camelCase/Find/HeapSort"
-)
+import "test/camelCase/Find/MergeSort"
 
 func main() {
 	//SingleLinkedList.Do() // 单链表
@@ -29,5 +27,7 @@ func main() {
 
 	//FastSort.FastSort() // 快速排序
 
-	HeapSort.HeapSort() // 堆排序
+	//HeapSort.HeapSort() // 堆排序
+
+	MergeSort.MergeSort() // 归并排序
 }
