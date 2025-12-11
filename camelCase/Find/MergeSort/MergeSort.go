@@ -27,8 +27,7 @@ func Merge(sourceArr []int32, leftStart, rightEnd int) {
 
 	tempLeftEnd    = mid - leftStart
 	举例
-	leftStart = 3
-	rightEnd  = 7
+	leftStart = 3 rightEnd  = 7
 	mid = (3 + 7) / 2 = 5
 	原数组下标 → tempArr 下标
 	3 → 0
