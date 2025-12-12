@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// CountSort 计数排序
+// CountSort O(n+k) 计数排序 n 长度 k 取值范围 相同的算一个
 func CountSort() {
 	var arr = []int32{2, 4, 3, 0, 2, 3, 0, 3}
 	fmt.Println(Sort(arr))

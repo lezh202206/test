@@ -35,5 +35,5 @@ func main() {
 
 	//RadixSort.RadixSort() // 基数排序 // 适用于多维度排序
 
-	CountSort.CountSort() // 基数排序
+	CountSort.CountSort() // 计数排序 空间换时间 如果每个元素取值差异都较大 不太适用
 }
